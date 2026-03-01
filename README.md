@@ -1,4 +1,4 @@
-# Medical Diagnostic System
+# Swasthik-AI - Medical Diagnostic System
 
 An integrated web-based system that combines NLP symptom detection with Bayesian diagnostic prediction and generates structured medical reports.
 
