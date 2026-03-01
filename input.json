@@ -1,0 +1,11 @@
+{
+    "symptoms": [
+        {
+            "user_term": "cough",
+            "negated": false,
+            "red_flag": false,
+            "Aaryan": "Chawla"
+        }
+    ],
+    "triage_level": "Moderate"
+}

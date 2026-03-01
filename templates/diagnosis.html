@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnosis - Medical Diagnostic System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Medical Diagnostic System</div>
+        <div class="nav-menu">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/profile">Profile</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h1>Symptom Assessment</h1>
+        
+        <div id="symptomInput" class="card">
+            <h2>Describe Your Symptoms</h2>
+            <p>Please describe your symptoms in detail. Include information about when they started, severity, and any other relevant details.</p>
+            
+            <div class="form-group">
+                <label for="symptoms">Your Symptoms</label>
+                <textarea id="symptoms" rows="6" placeholder="Example: I have a cough and fever for 3 days. The cough is severe and I'm experiencing chest pain..."></textarea>
+            </div>
+            
+            <button onclick="startDiagnosis()" class="btn btn-primary">Start Assessment</button>
+        </div>
+        
+        <div id="detectedSymptoms" class="card" style="display: none;">
+            <h2>Detected Symptoms</h2>
+            <div id="symptomsList"></div>
+            <div id="triageLevel"></div>
+        </div>
+        
+        <div id="questionSection" class="card" style="display: none;">
+            <h2>Follow-up Questions</h2>
+            <p id="questionText" class="question"></p>
+            
+            <div id="answerButtons">
+                <button onclick="submitAnswer('yes')" class="btn btn-success">Yes</button>
+                <button onclick="submitAnswer('no')" class="btn btn-danger">No</button>
+            </div>
+            
+            <div id="categoricalButtons" style="display: none; flex-wrap: wrap; gap: 10px;">
+                <!-- Categorical option buttons will be dynamically added here -->
+            </div>
+            
+            <div id="severityInput" style="display: none;">
+                <input type="number" id="severity" min="1" max="10" placeholder="1-10">
+                <button onclick="submitSeverity()" class="btn btn-primary">Submit</button>
+            </div>
+            
+            <div id="textInput" style="display: none;">
+                <input type="text" id="textAnswer" placeholder="Your answer">
+                <button onclick="submitText()" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+        
+        <div id="resultsSection" class="card" style="display: none;">
+            <h2>Diagnostic Results</h2>
+            <div id="resultsContent"></div>
+            <button onclick="generateReport()" class="btn btn-primary">Generate Medical Report</button>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/diagnosis.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Medical Diagnostic System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Medical Diagnostic System</div>
+        <div class="nav-menu">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/profile" class="active">Profile</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h1>Medical Profile</h1>
+        
+        <div class="profile-card">
+            <form id="profileForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="blood_group">Blood Group</label>
+                        <select id="blood_group">
+                            <option value="">Select Blood Group</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="allergies">Allergies (medications, latex, food)</label>
+                    <textarea id="allergies" rows="3" placeholder="List any allergies..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="past_medical_history">Past Medical History - Active Problems</label>
+                    <textarea id="past_medical_history" rows="4" placeholder="List active medical conditions..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="past_surgical_history">Past Surgical History</label>
+                    <textarea id="past_surgical_history" rows="4" placeholder="List previous surgeries and dates..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="current_medications">Current Medications (including OTC drugs, herbal supplements)</label>
+                    <textarea id="current_medications" rows="4" placeholder="List current medications..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="alcohol_tobacco">Alcohol/Tobacco/Substance Use</label>
+                    <textarea id="alcohol_tobacco" rows="3" placeholder="Describe usage..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Save Profile</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Report - Medical Diagnostic System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/report.css') }}">
+</head>
+<body>
+    <nav class="navbar no-print">
+        <div class="nav-brand">Medical Diagnostic System</div>
+        <div class="nav-menu">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/profile">Profile</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="report-actions no-print">
+            <button onclick="window.print()" class="btn btn-primary">Print Report</button>
+            <button onclick="downloadPDF()" class="btn btn-secondary">Download PDF</button>
+        </div>
+        
+        <div class="medical-report">
+            <div class="report-header">
+                <div class="hospital-info">
+                    <h1>THE VALLEY HOSPITAL</h1>
+                    <p>Ridgewood, New Jersey</p>
+                    <p>The Valley Hospital and Luckow PSS</p>
+                    <p>Fax 201-634-5498</p>
+                </div>
+                <div class="qr-code">
+                    <div class="qr-placeholder">QR</div>
+                    <p>PATIENT IDENTIFICATION</p>
+                </div>
+            </div>
+            
+            <h2 class="form-title">PRE-SURGERY MEDICAL CONSULTATION FORM</h2>
+            
+            <div class="form-section">
+                <div class="form-row">
+                    <div class="form-field">
+                        <label>Name:</label>
+                        <span id="patientName"></span>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-field">
+                        <label>Telephone:</label>
+                        <span id="patientPhone"></span>
+                    </div>
+                    <div class="form-field">
+                        <label>Date:</label>
+                        <span id="consultationDate"></span>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-field full-width">
+                        <label>Surgery Date and Contemplated Surgical Procedure:</label>
+                        <span id="surgeryInfo"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Past Medical History</h3>
+                <div class="subsection">
+                    <strong>Active Problems:</strong>
+                    <div id="activeProblems"></div>
+                </div>
+                <div class="subsection">
+                    <strong>Inactive Problems:</strong>
+                    <div id="inactiveProblems"></div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Past Surgical History</h3>
+                <div id="surgicalHistory"></div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Allergies</h3>
+                <div id="allergies"></div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Current Medications</h3>
+                <div id="medications"></div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Alcohol/Tobacco/Substance Abuse</h3>
+                <div id="substanceUse"></div>
+            </div>
+            
+            <div class="form-section">
+                <h3>REVIEW OF SYSTEMS</h3>
+                
+                <div class="system-review">
+                    <h4>1. Respiratory</h4>
+                    <div id="respiratoryFindings"></div>
+                    <div class="test-results">
+                        <strong>Tests/Data:</strong>
+                        <div id="respiratoryTests"></div>
+                    </div>
+                </div>
+                
+                <div class="system-review">
+                    <h4>2. Cardiovascular</h4>
+                    <div id="cardiovascularFindings"></div>
+                    <div class="test-results">
+                        <strong>Tests/Data:</strong>
+                        <div id="cardiovascularTests"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>DIAGNOSTIC ASSESSMENT</h3>
+                <div id="diagnosticResults"></div>
+            </div>
+            
+            <div class="form-section">
+                <h3>CLINICAL SUMMARY</h3>
+                <div id="clinicalSummary"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/report.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+.medical-report {
+    background: white;
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    font-size: 12pt;
+}
+
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid #000;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.hospital-info h1 {
+    font-size: 18pt;
+    margin-bottom: 0.25rem;
+}
+
+.hospital-info p {
+    margin: 0.1rem 0;
+    font-size: 10pt;
+}
+
+.qr-code {
+    text-align: center;
+}
+
+.qr-placeholder {
+    width: 80px;
+    height: 80px;
+    border: 2px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.qr-code p {
+    font-size: 8pt;
+    margin: 0;
+}
+
+.form-title {
+    text-align: center;
+    font-size: 14pt;
+    font-weight: bold;
+    margin: 1rem 0;
+    text-decoration: underline;
+}
+
+.form-section {
+    margin-bottom: 1.5rem;
+    page-break-inside: avoid;
+}
+
+.form-section h3 {
+    font-size: 12pt;
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+    text-decoration: underline;
+}
+
+.form-row {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.form-field {
+    flex: 1;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.form-field.full-width {
+    flex: 1 1 100%;
+}
+
+.form-field label {
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.form-field span {
+    border-bottom: 1px solid #000;
+    flex: 1;
+    min-height: 1.2rem;
+}
+
+.subsection {
+    margin-bottom: 1rem;
+}
+
+.subsection strong {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.system-review {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.system-review h4 {
+    font-size: 11pt;
+    font-weight: bold;
+    margin-bottom: 0.75rem;
+}
+
+.test-results {
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #ddd;
+}
+
+.checkbox-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checkbox-item input[type="checkbox"] {
+    margin: 0;
+}
+
+.report-actions {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.report-actions button {
+    margin: 0 0.5rem;
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: white;
+    }
+    
+    .no-print {
+        display: none !important;
+    }
+    
+    .medical-report {
+        box-shadow: none;
+        padding: 0;
+    }
+    
+    .form-section {
+        page-break-inside: avoid;
+    }
+}

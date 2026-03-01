@@ -1,0 +1,16 @@
+{
+  "example@email.com": {
+    "name": "John Doe",
+    "email": "example@email.com",
+    "password": "hashed_password_here",
+    "profile": {
+      "blood_group": "O+",
+      "allergies": "None",
+      "past_medical_history": "None",
+      "past_surgical_history": "None",
+      "current_medications": "None",
+      "alcohol_tobacco": "None"
+    },
+    "consultations": []
+  }
+}

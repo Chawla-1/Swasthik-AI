@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Medical Diagnostic System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Medical Diagnostic System</div>
+        <div class="nav-menu">
+            <a href="/dashboard" class="active">Dashboard</a>
+            <a href="/profile">Profile</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="welcome-section">
+            <h1>Welcome, {{ user.name }}!</h1>
+            <p>Start a new diagnosis or view your consultation history</p>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="card">
+                <div class="card-icon">🩺</div>
+                <h3>New Diagnosis</h3>
+                <p>Start a new symptom assessment</p>
+                <a href="/diagnosis" class="btn btn-primary">Start Now</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">👤</div>
+                <h3>My Profile</h3>
+                <p>Update medical history & information</p>
+                <a href="/profile" class="btn btn-secondary">View Profile</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">📋</div>
+                <h3>Consultation History</h3>
+                <p>View past consultations</p>
+                <button class="btn btn-secondary" onclick="viewHistory()">View History</button>
+            </div>
+        </div>
+        
+        <div id="historySection" style="display: none;">
+            <h2>Recent Consultations</h2>
+            <div id="consultationList"></div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+================================================================================
+MEDICAL DIAGNOSTIC SYSTEM - WEB APPLICATION QUICK START
+================================================================================
+
+STEP 1: Install Requirements
+-----------------------------
+pip install flask flask-cors pandas numpy werkzeug
+
+
+STEP 2: Run the Web Application
+--------------------------------
+python app.py
+
+The server will start at: http://localhost:5000
+
+
+STEP 3: Register an Account
+----------------------------
+1. Open http://localhost:5000 in your browser
+2. Click "Register here"
+3. Enter your name, email, and password
+4. Click "Register"
+
+
+STEP 4: Complete Your Medical Profile
+--------------------------------------
+1. Login with your credentials
+2. Go to "Profile" in the navigation
+3. Fill in:
+   - Blood Group
+   - Allergies
+   - Past Medical History
+   - Past Surgical History
+   - Current Medications
+   - Alcohol/Tobacco Use
+4. Click "Save Profile"
+
+
+STEP 5: Start a Diagnosis
+--------------------------
+1. Go to Dashboard
+2. Click "Start Now" under "New Diagnosis"
+3. Describe your symptoms in the text box
+   Example: "I have a severe cough and fever for 3 days"
+4. Click "Start Assessment"
+
+
+STEP 6: Answer Follow-up Questions
+-----------------------------------
+The system will ask questions like:
+  - "On a scale of 1-10, how severe is the cough?"
+  - "Are you experiencing shortness of breath? (yes/no)"
+
+Answer each question to refine the diagnosis.
+
+
+STEP 7: View Results & Generate Report
+---------------------------------------
+1. Review the top 5 probable diagnoses
+2. Check the confidence level
+3. Click "Generate Medical Report"
+4. View the structured medical consultation form
+5. Print or download the report
+
+
+================================================================================
+FEATURES:
+================================================================================
+
+✓ User Authentication (Login/Register)
+✓ Medical Profile Management
+✓ NLP Symptom Detection
+✓ Interactive Diagnostic Questions
+✓ Bayesian Probability Calculations
+✓ Structured Medical Reports (Hospital Format)
+✓ Consultation History
+✓ Print/Download Reports
+
+================================================================================
+REPORT FORMAT:
+================================================================================
+
+The system generates reports in the format of:
+"THE VALLEY HOSPITAL - PRE-SURGERY MEDICAL CONSULTATION FORM"
+
+Includes:
+- Patient Information
+- Past Medical History
+- Past Surgical History
+- Allergies
+- Current Medications
+- Review of Systems
+- Diagnostic Assessment
+- Clinical Summary
+
+================================================================================
