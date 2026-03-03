@@ -1,167 +1,393 @@
-.medical-report {
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+/* ═══════════════════════════════════════
+   REPORT ACTIONS (screen only)
+═══════════════════════════════════════ */
+.report-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.25rem;
     background: white;
-    padding: 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-    font-family: Arial, sans-serif;
-    font-size: 12pt;
+    border-radius: 12px;
+    border: 1px solid #dde4ef;
+    box-shadow: 0 2px 8px rgba(15,31,61,.06);
 }
 
+/* ═══════════════════════════════════════
+   MEDICAL REPORT DOCUMENT
+═══════════════════════════════════════ */
+.medical-report {
+    background: white;
+    padding: 1.75rem 2.25rem;
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+    font-size: 10pt;
+    color: #0f1f3d;
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(15,31,61,.12);
+    border: 1px solid #dde4ef;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Top accent stripe */
+.medical-report::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #0f1f3d, #0ea5af);
+}
+
+/* ═══════════════════════════════════════
+   REPORT HEADER
+═══════════════════════════════════════ */
 .report-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    border-bottom: 2px solid #000;
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
+    border-bottom: 2px solid #0f1f3d;
+    padding-bottom: .875rem;
+    margin-bottom: .875rem;
+    margin-top: .375rem;
 }
 
 .hospital-info h1 {
-    font-size: 18pt;
-    margin-bottom: 0.25rem;
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #0f1f3d;
+    letter-spacing: -.025em;
+    margin-bottom: .25rem;
 }
 
 .hospital-info p {
-    margin: 0.1rem 0;
-    font-size: 10pt;
+    margin: .1rem 0;
+    font-size: 8.5pt;
+    color: #3d5173;
 }
 
-.qr-code {
-    text-align: center;
-}
+.qr-code { text-align: center; }
 
 .qr-placeholder {
-    width: 80px;
-    height: 80px;
-    border: 2px solid #000;
+    width: 70px;
+    height: 70px;
+    border: 2px solid #0f1f3d;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
+    font-weight: 800;
+    font-size: 10pt;
+    margin-bottom: .375rem;
+    border-radius: 6px;
+    color: #0f1f3d;
+    letter-spacing: 1px;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 3px,
+        rgba(15,31,61,.04) 3px,
+        rgba(15,31,61,.04) 6px
+    );
 }
 
 .qr-code p {
-    font-size: 8pt;
-    margin: 0;
+    font-size: 7pt;
+    color: #7b90ae;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
 }
 
+/* ═══════════════════════════════════════
+   FORM TITLE
+═══════════════════════════════════════ */
 .form-title {
     text-align: center;
-    font-size: 14pt;
-    font-weight: bold;
-    margin: 1rem 0;
-    text-decoration: underline;
+    font-family: 'Fraunces', serif;
+    font-size: 12pt;
+    font-weight: 800;
+    color: #0f1f3d;
+    margin: .875rem 0;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    position: relative;
+    padding-bottom: .5rem;
 }
 
+.form-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 2px;
+    background: linear-gradient(90deg, #0f1f3d, #0ea5af);
+    border-radius: 1px;
+}
+
+/* ═══════════════════════════════════════
+   FORM SECTIONS
+═══════════════════════════════════════ */
 .form-section {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     page-break-inside: avoid;
 }
 
 .form-section h3 {
-    font-size: 12pt;
-    font-weight: bold;
-    margin-bottom: 0.75rem;
-    text-decoration: underline;
+    font-family: 'Fraunces', serif;
+    font-size: 10pt;
+    font-weight: 700;
+    color: #0f1f3d;
+    margin-bottom: .625rem;
+    padding: .375rem .75rem;
+    background: #f4f7fb;
+    border-left: 3px solid #0ea5af;
+    border-radius: 0 6px 6px 0;
+    text-transform: uppercase;
+    letter-spacing: .05em;
 }
 
 .form-row {
     display: flex;
-    gap: 2rem;
-    margin-bottom: 0.75rem;
+    gap: 1.5rem;
+    margin-bottom: .625rem;
+    flex-wrap: wrap;
 }
 
 .form-field {
     flex: 1;
     display: flex;
-    gap: 0.5rem;
+    align-items: flex-end;
+    gap: .5rem;
+    min-width: 200px;
 }
 
-.form-field.full-width {
-    flex: 1 1 100%;
-}
+.form-field.full-width { flex: 1 1 100%; }
 
 .form-field label {
-    font-weight: bold;
+    font-weight: 600;
     white-space: nowrap;
+    font-size: 9pt;
+    color: #3d5173;
+    margin-bottom: 0;
+    text-transform: none;
+    letter-spacing: 0;
 }
 
 .form-field span {
-    border-bottom: 1px solid #000;
+    border-bottom: 1.5px solid #dde4ef;
     flex: 1;
     min-height: 1.2rem;
+    color: #0f1f3d;
+    font-size: 9.5pt;
+    padding-bottom: 2px;
 }
 
-.subsection {
-    margin-bottom: 1rem;
+/* Compact Grid Layout */
+.compact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .875rem;
 }
+
+.compact-item {
+    background: #f8fafd;
+    border: 1px solid #eef1f6;
+    border-radius: 6px;
+    padding: .625rem .75rem;
+}
+
+.compact-item strong {
+    display: block;
+    font-size: 8.5pt;
+    color: #3d5173;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    margin-bottom: .375rem;
+}
+
+.compact-item > div, .compact-item > p {
+    font-size: 9.5pt;
+    color: #0f1f3d;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.subsection { margin-bottom: .875rem; }
 
 .subsection strong {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: .375rem;
+    font-size: 9pt;
+    color: #3d5173;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
 }
 
+.subsection > div, .subsection > p {
+    font-size: 9.5pt;
+    color: #0f1f3d;
+    line-height: 1.5;
+    padding: .375rem .625rem;
+    background: #f8fafd;
+    border-radius: 6px;
+    border: 1px solid #eef1f6;
+    min-height: 1.5rem;
+}
+
+/* ═══════════════════════════════════════
+   SYSTEM REVIEW
+═══════════════════════════════════════ */
 .system-review {
-    margin-bottom: 1.5rem;
-    padding: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    margin-bottom: 1.25rem;
+    padding: 1.125rem 1.25rem;
+    border: 1px solid #dde4ef;
+    border-radius: 8px;
+    background: #fbfcfe;
 }
 
 .system-review h4 {
-    font-size: 11pt;
-    font-weight: bold;
-    margin-bottom: 0.75rem;
+    font-family: 'Fraunces', serif;
+    font-size: 10.5pt;
+    font-weight: 700;
+    color: #0f1f3d;
+    margin-bottom: .875rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.system-review h4::before {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #0ea5af;
+    flex-shrink: 0;
 }
 
 .test-results {
-    margin-top: 1rem;
-    padding-top: 0.75rem;
-    border-top: 1px solid #ddd;
+    margin-top: .875rem;
+    padding-top: .75rem;
+    border-top: 1px solid #eef1f6;
 }
 
+.test-results strong {
+    display: block;
+    font-size: 9.5pt;
+    color: #7b90ae;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: .5rem;
+    font-weight: 600;
+}
+
+/* ═══════════════════════════════════════
+   CHECKBOXES
+═══════════════════════════════════════ */
 .checkbox-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem;
+    gap: .5rem;
 }
 
 .checkbox-item {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: .5rem;
+    font-size: 10pt;
+    color: #0f1f3d;
 }
 
-.checkbox-item input[type="checkbox"] {
-    margin: 0;
+.checkbox-item input[type="checkbox"] { margin: 0; accent-color: #0ea5af; }
+
+/* ═══════════════════════════════════════
+   DIAGNOSTIC RESULTS IN REPORT
+═══════════════════════════════════════ */
+#diagnosticResults h4 {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: #0f1f3d;
+    margin-bottom: .5rem;
 }
 
-.report-actions {
-    text-align: center;
-    margin-bottom: 2rem;
+#diagnosticResults ol {
+    padding-left: 1.125rem;
+    margin-bottom: .5rem;
 }
 
-.report-actions button {
-    margin: 0 0.5rem;
+#diagnosticResults ol li {
+    font-size: 9.5pt;
+    color: #0f1f3d;
+    margin-bottom: .25rem;
+    line-height: 1.5;
 }
 
-/* Print Styles */
+#diagnosticResults ol li strong { color: #0ea5af; }
+
+#diagnosticResults p {
+    font-size: 9.5pt;
+    line-height: 1.6;
+    margin-bottom: .375rem;
+}
+
+/* ═══════════════════════════════════════
+   CLINICAL SUMMARY IN REPORT
+═══════════════════════════════════════ */
+#clinicalSummary p {
+    font-size: 9.5pt;
+    line-height: 1.6;
+    color: #0f1f3d;
+    margin-bottom: .5rem;
+}
+
+#clinicalSummary ul {
+    padding-left: 1.25rem;
+    margin: .375rem 0 .5rem;
+}
+
+#clinicalSummary ul li {
+    font-size: 9.5pt;
+    color: #0f1f3d;
+    margin-bottom: .2rem;
+}
+
+#clinicalSummary strong { color: #0f1f3d; font-weight: 600; }
+
+/* ═══════════════════════════════════════
+   PRINT STYLES
+═══════════════════════════════════════ */
 @media print {
-    body {
-        background: white;
-    }
-    
-    .no-print {
-        display: none !important;
-    }
-    
+    body { background: white; }
+
+    .no-print { display: none !important; }
+
     .medical-report {
         box-shadow: none;
-        padding: 0;
+        border: none;
+        border-radius: 0;
+        padding: 1.5rem 2rem;
+        max-width: 100%;
     }
-    
-    .form-section {
-        page-break-inside: avoid;
+
+    .medical-report::before { display: none; }
+
+    .form-section { page-break-inside: avoid; }
+
+    .system-review {
+        border: 1px solid #ccc;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .form-section h3 {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
     }
 }

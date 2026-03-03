@@ -3,37 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Medical Diagnostic System</title>
+    <title>Login — Saarthi</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .saarthi-mark {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 64px; height: 64px; border-radius: 18px;
+            background: white;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 8px 24px rgba(14,165,175,.32);
+            overflow: hidden;
+        }
+        .saarthi-mark img { width: 100%; height: 100%; object-fit: cover; }
+    </style>
 </head>
-<body>
+<body class="auth-page">
     <div class="auth-container">
         <div class="auth-card">
             <div class="auth-header">
-                <h1>Medical Diagnostic System</h1>
-                <p>Login to your account</p>
+                <div class="saarthi-mark">
+                    <img src="{{ url_for('static', filename='logo.jpeg') }}" alt="Swasthik Logo">
+                </div>
+                <h1>Swasthik</h1>
+                <p>AI-Powered Medical Diagnostic System</p>
+                <p style="margin-top:.25rem;font-size:.8rem">Sign in to your account to continue</p>
             </div>
-            
+
             <form id="loginForm">
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
+                    <label for="email">Email address</label>
+                    <input type="email" id="email" placeholder="you@example.com" required autocomplete="email">
                 </div>
-                
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" required>
+                    <input type="password" id="password" placeholder="Enter your password" required autocomplete="current-password">
                 </div>
-                
-                <button type="submit" class="btn btn-primary btn-block">Login</button>
+                <button type="submit" class="btn btn-primary btn-block btn-lg" style="margin-top:.5rem">
+                    Sign In
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                </button>
             </form>
-            
+
             <div class="auth-footer">
-                <p>Don't have an account? <a href="/register">Register here</a></p>
+                <p>Don't have an account? <a href="/register">Create one here</a></p>
             </div>
         </div>
     </div>
-    
     <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
 </body>
 </html>

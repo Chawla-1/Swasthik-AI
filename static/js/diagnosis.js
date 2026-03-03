@@ -44,13 +44,17 @@ async function startDiagnosis() {
         diagnosisData.triageLevel = result.triage_level;
         diagnosisData.emergencyMessage = result.emergency_message || null;
         
-        // Show emergency alert if present
+        // Show emergency alert if present - make it persistent
         if (result.emergency_message) {
             const alertDiv = document.createElement('div');
+            alertDiv.id = 'emergencyAlert';
             alertDiv.className = 'emergency-alert';
-            alertDiv.style.cssText = 'background: #ff4444; color: white; padding: 15px; margin: 20px 0; border-radius: 5px; font-weight: bold;';
-            alertDiv.textContent = result.emergency_message;
-            document.getElementById('symptomInput').parentNode.insertBefore(alertDiv, document.getElementById('symptomInput').nextSibling);
+            alertDiv.style.cssText = 'background: #ff4444; color: white; padding: 15px; margin: 20px 0; border-radius: 5px; font-weight: bold; text-align: center; font-size: 16px;';
+            alertDiv.innerHTML = `<strong>⚠️ ${result.emergency_message}</strong><br><small style="font-size: 14px; font-weight: normal;">Continuing with diagnostic assessment...</small>`;
+            
+            // Insert at the top of the page
+            const container = document.querySelector('.container');
+            container.insertBefore(alertDiv, container.firstChild);
         }
         
         // Show detected symptoms
@@ -89,44 +93,104 @@ async function getNextQuestion() {
             document.getElementById('questionSection').style.display = 'block';
             document.getElementById('questionText').textContent = result.question;
             
-            // Hide all input types first
-            document.getElementById('answerButtons').style.display = 'none';
-            document.getElementById('categoricalButtons').style.display = 'none';
-            document.getElementById('severityInput').style.display = 'none';
-            document.getElementById('textInput').style.display = 'none';
-            
-            // Determine which input type to show based on answer_type
-            const answerType = result.answer_type || 'yes_no';
-            
-            if (answerType === 'numeric_scale' || answerType.includes('severity')) {
-                // Show severity scale input
-                document.getElementById('severityInput').style.display = 'flex';
-            } else if (answerType === 'free_text') {
-                // Show text input
-                document.getElementById('textInput').style.display = 'flex';
-            } else if (answerType === 'categorical' || answerType === 'categorical_multi') {
-                // Show categorical buttons
-                const categoricalDiv = document.getElementById('categoricalButtons');
-                categoricalDiv.innerHTML = '';
-                categoricalDiv.style.display = 'flex';
-                
-                if (result.options && result.options.length > 0) {
-                    result.options.forEach(option => {
-                        const button = document.createElement('button');
-                        button.className = 'btn btn-primary';
-                        button.textContent = option.charAt(0).toUpperCase() + option.slice(1);
-                        button.onclick = () => submitAnswer(option);
-                        categoricalDiv.appendChild(button);
-                    });
-                }
-            } else {
-                // Default: yes/no buttons
-                document.getElementById('answerButtons').style.display = 'flex';
-            }
+            // Render answer UI dynamically
+            renderAnswerUI(result);
         }
     } catch (error) {
         alert('Error getting question: ' + error.message);
     }
+}
+
+function renderAnswerUI(q) {
+    const area = document.getElementById('answerArea');
+    const badge = document.getElementById('qTypeBadge');
+
+    // Backend sends these directly - no parsing needed
+    const answerType = q.answer_type || 'yes_no';
+    const options = q.options || [];
+    const qcol = (q.qcol || '').toLowerCase();
+
+    // CATEGORICAL - options from backend e.g. ['sudden', 'gradual']
+    if (answerType === 'categorical' || options.length >= 2) {
+        badge.textContent = 'Choose One';
+        let html = '<div class="mc-options">';
+        for (let i = 0; i < options.length; i++) {
+            const val = options[i];
+            const label = val.charAt(0).toUpperCase() + val.slice(1);
+            html += `<label class="mc-option" onclick="selectMC(this)">
+                <input type="radio" name="mcAnswer" value="${val}"> ${label}
+            </label>`;
+        }
+        html += '</div>';
+        html += '<div style="margin-top:1rem">'
+            + '<button onclick="submitMC()" class="btn btn-primary">Submit Answer</button>'
+            + '</div>';
+        area.innerHTML = html;
+
+    // SCALE / SEVERITY
+    } else if (answerType === 'scale' || qcol.indexOf('severity') !== -1) {
+        badge.textContent = 'Severity Scale';
+        area.innerHTML = '<div class="severity-area">'
+            + '<div class="severity-display" id="severityDisplay">5</div>'
+            + '<div class="severity-track">'
+            + '<input type="range" id="severitySlider" min="1" max="10" value="5" '
+            + 'oninput="document.getElementById(\'severityDisplay\').textContent=this.value">'
+            + '</div>'
+            + '<div class="severity-labels">'
+            + '<span>1 - Mild</span><span>5 - Moderate</span><span>10 - Severe</span>'
+            + '</div>'
+            + '<button onclick="submitSeverity()" class="btn btn-primary btn-lg" style="margin-top:.5rem">Submit</button>'
+            + '</div>';
+
+    // DURATION
+    } else if (answerType === 'duration' || qcol.indexOf('duration') !== -1) {
+        badge.textContent = 'Duration';
+        const dOpts = ['Less than 24 hours', '1-3 days', '4-7 days', '1-2 weeks', 'More than 2 weeks', 'More than a month'];
+        let dHtml = '<div class="mc-options">';
+        for (let j = 0; j < dOpts.length; j++) {
+            dHtml += `<label class="mc-option" onclick="selectMC(this)">
+                <input type="radio" name="mcAnswer" value="${dOpts[j]}"> ${dOpts[j]}
+            </label>`;
+        }
+        dHtml += '</div><div style="margin-top:1rem">'
+            + '<button onclick="submitMC()" class="btn btn-primary">Submit</button></div>';
+        area.innerHTML = dHtml;
+
+    // FREE TEXT
+    } else if (answerType === 'text' || qcol.indexOf('free_text') !== -1) {
+        badge.textContent = 'Open Answer';
+        area.innerHTML = '<div style="display:flex;gap:.875rem;align-items:center">'
+            + '<input type="text" id="textAnswer" placeholder="Type your answer..." style="flex:1" '
+            + 'onkeypress="if(event.key===\'Enter\') submitText()">'
+            + '<button onclick="submitText()" class="btn btn-primary">Submit</button>'
+            + '</div>';
+
+    // DEFAULT: YES / NO (phase 2 differentiation questions)
+    } else {
+        badge.textContent = 'Yes / No';
+        area.innerHTML = '<div class="yesno-buttons">'
+            + '<button onclick="submitAnswer(\'yes\')" class="btn btn-success btn-lg">Yes</button>'
+            + '<button onclick="submitAnswer(\'no\')" class="btn btn-danger btn-lg">No</button>'
+            + '</div>';
+    }
+}
+
+function selectMC(label) {
+    const all = document.querySelectorAll('.mc-option');
+    for (let i = 0; i < all.length; i++) {
+        all[i].classList.remove('selected');
+    }
+    label.classList.add('selected');
+    label.querySelector('input').checked = true;
+}
+
+function submitMC() {
+    const selected = document.querySelector('input[name="mcAnswer"]:checked');
+    if (!selected) {
+        alert('Please select an option');
+        return;
+    }
+    submitAnswer(selected.value);
 }
 
 async function submitAnswer(answer) {
@@ -153,34 +217,8 @@ async function submitAnswer(answer) {
 }
 
 async function submitSeverity() {
-    const severity = document.getElementById('severity').value;
-    
-    if (!severity || severity < 1 || severity > 10) {
-        alert('Please enter a severity level between 1 and 10');
-        return;
-    }
-    
-    const data = {
-        answer: severity,
-        qcol: currentQuestion.qcol || null,
-        symptom: currentQuestion.symptom || null,
-        question: currentQuestion.question
-    };
-    
-    diagnosisData.answers.push(data);
-    
-    try {
-        await fetch('/api/answer', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-        
-        document.getElementById('severity').value = '';
-        getNextQuestion();
-    } catch (error) {
-        alert('Error submitting severity: ' + error.message);
-    }
+    const severity = document.getElementById('severitySlider').value;
+    submitAnswer(severity);
 }
 
 async function submitText() {
@@ -191,27 +229,7 @@ async function submitText() {
         return;
     }
     
-    const data = {
-        answer: textAnswer,
-        qcol: currentQuestion.qcol || null,
-        symptom: currentQuestion.symptom || null,
-        question: currentQuestion.question
-    };
-    
-    diagnosisData.answers.push(data);
-    
-    try {
-        await fetch('/api/answer', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-        
-        document.getElementById('textAnswer').value = '';
-        getNextQuestion();
-    } catch (error) {
-        alert('Error submitting answer: ' + error.message);
-    }
+    submitAnswer(textAnswer);
 }
 
 function showResults(result) {
@@ -223,11 +241,14 @@ function showResults(result) {
     
     let html = '';
     
-    // Show emergency alert if present
-    if (result.emergency_message) {
+    // Show emergency alert if present - make it prominent
+    if (result.emergency_message || diagnosisData.emergencyMessage) {
+        const emergencyMsg = result.emergency_message || diagnosisData.emergencyMessage;
         html += `
-            <div class="emergency-alert" style="background: #ff4444; color: white; padding: 15px; margin-bottom: 20px; border-radius: 5px; font-weight: bold;">
-                ${result.emergency_message}
+            <div class="alert alert-error" style="margin-bottom: 1.75rem; padding: 1.5rem; font-size: 1rem;">
+                <div style="font-size: 1.125rem; font-weight: 700; margin-bottom: 0.5rem;">⚠️ EMERGENCY ALERT ⚠️</div>
+                <div>${emergencyMsg}</div>
+                <div style="margin-top: 0.75rem; font-size: 0.875rem; font-weight: normal;">The diagnostic assessment below is provided for informational purposes only.</div>
             </div>
         `;
     }
@@ -235,28 +256,37 @@ function showResults(result) {
     if (result.results && result.results.length > 0) {
         result.results.forEach((item, index) => {
             const topClass = index === 0 ? 'top' : '';
+            const rank = index === 0 ? '★' : (index + 1);
             html += `
                 <div class="result-item ${topClass}">
-                    <div class="disease-name">${index + 1}. ${item.disease}</div>
+                    <div class="result-item-inner">
+                        <div class="result-rank">${rank}</div>
+                        <div class="disease-name">${item.disease}</div>
+                    </div>
                     <div class="probability">${item.probability}%</div>
                 </div>
             `;
         });
         
+        const conf = result.confidence || 'Moderate';
+        const confColor = conf === 'High' ? 'var(--green)' : conf === 'Low' ? 'var(--red)' : 'var(--amber)';
         html += `
             <div class="confidence">
-                <strong>Most Probable Diagnosis:</strong> ${result.top_diagnosis}<br>
-                <strong>Confidence Level:</strong> ${result.confidence}
+                <strong>Primary Diagnosis:</strong> ${result.top_diagnosis}<br>
+                <strong>Confidence:</strong> <span style="color:${confColor}">${conf}</span>
             </div>
         `;
     } else {
-        html = '<p>No diagnosis could be determined.</p>';
+        html = '<div class="alert alert-warn">No definitive diagnosis could be determined. Please consult a physician.</div>';
     }
     
     document.getElementById('resultsContent').innerHTML = html;
 }
 
 async function generateReport() {
+    // Debug: Log the data being saved
+    console.log('Generating report with data:', diagnosisData);
+    
     // Save consultation
     try {
         await fetch('/api/save-consultation', {
@@ -275,6 +305,7 @@ async function generateReport() {
     
     // Store data in sessionStorage for report page
     sessionStorage.setItem('diagnosisData', JSON.stringify(diagnosisData));
+    console.log('Data saved to sessionStorage');
     
     // Navigate to report page
     window.location.href = '/report';

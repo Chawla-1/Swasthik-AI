@@ -3,54 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Medical Diagnostic System</title>
+    <title>Dashboard — Saarthi</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <nav class="navbar">
-        <div class="nav-brand">Medical Diagnostic System</div>
+        <div class="nav-brand">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none"></svg>
+            <span>Swasthik</span>
+        </div>
         <div class="nav-menu">
             <a href="/dashboard" class="active">Dashboard</a>
             <a href="/profile">Profile</a>
-            <a href="#" onclick="logout()">Logout</a>
+            <a href="#" onclick="logout()" style="color:var(--red)">Logout</a>
         </div>
     </nav>
-    
+
     <div class="container">
         <div class="welcome-section">
-            <h1>Welcome, {{ user.name }}!</h1>
-            <p>Start a new diagnosis or view your consultation history</p>
+            <div class="welcome-badge">System Online</div>
+            <h1>Welcome back, {{ user.name }}!</h1>
+            <p>Your AI-assisted diagnostic workspace is ready. Start a new assessment or review your history.</p>
         </div>
-        
+
         <div class="dashboard-grid">
-            <div class="card">
+            <div class="dashboard-card card-accent" onclick="window.location.href='/diagnosis'">
                 <div class="card-icon">🩺</div>
                 <h3>New Diagnosis</h3>
-                <p>Start a new symptom assessment</p>
-                <a href="/diagnosis" class="btn btn-primary">Start Now</a>
+                <p>Start a new AI-powered symptom assessment and receive differential diagnoses.</p>
+                <a href="/diagnosis" class="btn btn-primary">Begin Assessment</a>
             </div>
-            
-            <div class="card">
+            <div class="dashboard-card" onclick="window.location.href='/profile'">
                 <div class="card-icon">👤</div>
-                <h3>My Profile</h3>
-                <p>Update medical history & information</p>
+                <h3>Medical Profile</h3>
+                <p>Manage your medical history, allergies, and current medications.</p>
                 <a href="/profile" class="btn btn-secondary">View Profile</a>
             </div>
-            
-            <div class="card">
+            <div class="dashboard-card" onclick="viewHistory()">
                 <div class="card-icon">📋</div>
                 <h3>Consultation History</h3>
-                <p>View past consultations</p>
+                <p>Review past diagnoses, reports, and consultation records.</p>
                 <button class="btn btn-secondary" onclick="viewHistory()">View History</button>
             </div>
         </div>
-        
+
         <div id="historySection" style="display: none;">
-            <h2>Recent Consultations</h2>
+            <h2 style="font-family:var(--font-display);font-size:1.3rem;font-weight:700;color:var(--navy);margin-bottom:1rem;letter-spacing:-.025em">Recent Consultations</h2>
             <div id="consultationList"></div>
         </div>
     </div>
-    
+
     <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script>
+        async function viewHistory() {
+            const historySection = document.getElementById('historySection');
+            const consultationList = document.getElementById('consultationList');
+            historySection.style.display = 'block';
+            historySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            consultationList.innerHTML = `
+                <div class="card">
+                    <div class="empty-state">
+                        <div class="empty-icon">📄</div>
+                        <p>No consultation history yet.<br>Start a new diagnosis to create your first record.</p>
+                    </div>
+                </div>`;
+        }
+    </script>
 </body>
 </html>
