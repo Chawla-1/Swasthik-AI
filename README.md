@@ -8,7 +8,7 @@ An integrated web-based system that combines NLP symptom detection with Bayesian
 - **User Profiles** - Store blood group, allergies, medical history, medications
 - **Symptom Analysis** - NLP-powered symptom extraction from natural language
 - **Interactive Diagnosis** - Follow-up questions for accurate assessment
-- **Medical Reports** - Generate structured pre-surgery consultation forms
+- **Medical Reports** - Generate structured pre-surgery consultation form
 - **Consultation History** - Track past diagnoses and assessments
 
 ## Files Structure
